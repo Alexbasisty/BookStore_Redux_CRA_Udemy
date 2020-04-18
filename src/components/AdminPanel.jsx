@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { fbase, firebaseApp } from "../firebase";
+import LoginForm from "../LoginForm";
 
 class AdminPanel extends Component {
     state = {
@@ -86,34 +87,12 @@ class AdminPanel extends Component {
         return (
             <div>
                 {!this.state.loggedIn && (
-                    <div className=" col-md-4 mx-auto mt-5">
-                        <form onSubmit={this.authenticate}>
-                            <div className="form-group">
-                                <input
-                                    type="text"
-                                    placeholder="E-mail"
-                                    id="email"
-                                    name="email"
-                                    className="form-control"
-                                    onChange={this.handleLogIn}
-                                    value={this.state.email}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    onChange={this.handleLogIn}
-                                    className="form-control"
-                                    value={this.state.password}
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary">
-                                Zaloguj
-                            </button>
-                        </form>
-                    </div>
+                    <LoginForm
+                        authenticate={this.authenticate}
+                        handleLogIn={this.handleLogIn}
+                        email={this.state.email}
+                        password={this.state.password}
+                    />
                 )}
                 {this.state.loggedIn && (
                     <div className="adminPanel col-md-4">
