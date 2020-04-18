@@ -1,12 +1,36 @@
 import React, { Component } from "react";
+import { firebaseApp } from "../firebase";
 
 class LoginForm extends Component {
+    state = {
+        email: "",
+        password: "",
+    };
+    authenticate = (event) => {
+        event.preventDefault();
+        firebaseApp
+            .auth()
+            .signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+                this.props.changeLoggedIn(true);
+            })
+            .catch(() => {
+                console.log("Unable to authenticate");
+            });
+    };
+
+    handleLogIn = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
     render() {
-        const { handleLogIn, authenticate, email, password } = this.props;
+        const { email, password } = this.state;
 
         return (
             <div className=" col-md-4 mx-auto mt-5">
-                <form onSubmit={authenticate}>
+                <form onSubmit={this.authenticate}>
                     <div className="form-group">
                         <input
                             type="text"
@@ -14,7 +38,7 @@ class LoginForm extends Component {
                             id="email"
                             name="email"
                             className="form-control"
-                            onChange={handleLogIn}
+                            onChange={this.handleLogIn}
                             value={email}
                         />
                     </div>
@@ -23,7 +47,7 @@ class LoginForm extends Component {
                             type="password"
                             id="password"
                             name="password"
-                            onChange={handleLogIn}
+                            onChange={this.handleLogIn}
                             className="form-control"
                             value={password}
                         />

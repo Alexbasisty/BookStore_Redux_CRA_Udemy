@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fbase, firebaseApp } from "../firebase";
+import { fbase } from "../firebase";
 import LoginForm from "./LoginForm";
 import BookForm from "./BookForm";
 
@@ -14,8 +14,6 @@ class AdminPanel extends Component {
             image: "",
         },
         loggedIn: false,
-        email: "",
-        password: "",
     };
 
     handleChange = (event) => {
@@ -31,12 +29,6 @@ class AdminPanel extends Component {
                 ...this.state.book,
                 [event.target.name]: event.target.value,
             },
-        });
-    };
-
-    handleLogIn = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value,
         });
     };
 
@@ -68,32 +60,14 @@ class AdminPanel extends Component {
         fbase.removeBinding(this.ref);
     }
 
-    authenticate = (event) => {
-        event.preventDefault();
-        firebaseApp
-            .auth()
-            .signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => {
-                this.setState({
-                    loggedIn: true,
-                });
-            })
-            .catch(() => {
-                console.log("Unable to authenticate");
-            });
-    };
+    changeLoggedIn = (newValue) => this.setState({ loggedIn: newValue });
 
     render() {
         const { name, author, description, onStock, image } = this.state.book;
         return (
             <div>
                 {!this.state.loggedIn && (
-                    <LoginForm
-                        authenticate={this.authenticate}
-                        handleLogIn={this.handleLogIn}
-                        email={this.state.email}
-                        password={this.state.password}
-                    />
+                    <LoginForm changeLoggedIn={this.changeLoggedIn} />
                 )}
                 {this.state.loggedIn && (
                     <BookForm
