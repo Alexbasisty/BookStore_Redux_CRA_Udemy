@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fbase, firebaseApp } from "../firebase";
-import LoginForm from "../LoginForm";
+import LoginForm from "./LoginForm";
+import BookForm from "./BookForm";
 
 class AdminPanel extends Component {
     state = {
@@ -95,75 +96,15 @@ class AdminPanel extends Component {
                     />
                 )}
                 {this.state.loggedIn && (
-                    <div className="adminPanel col-md-4">
-                        <form onSubmit={this.addNewBook}>
-                            <div className="form-group">
-                                <input
-                                    value={name}
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Book name"
-                                    className="form-control"
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    value={author}
-                                    type="text"
-                                    id="author"
-                                    name="author"
-                                    placeholder="Book author"
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <textarea
-                                    value={description}
-                                    id="description"
-                                    name="description"
-                                    placeholder="Book description"
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div
-                                className="form-group"
-                                style={{ paddingLeft: "20px" }}
-                            >
-                                <input
-                                    value={onStock}
-                                    type="checkbox"
-                                    id="onStock"
-                                    name="onStock"
-                                    className="form-check-input"
-                                    onChange={this.handleChange}
-                                />
-                                <label
-                                    htmlFor="onStock"
-                                    className="form-check-label"
-                                >
-                                    On stock
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    value={image}
-                                    type="text"
-                                    id="image"
-                                    name="image"
-                                    placeholder="Book image"
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary">
-                                Dodaj
-                            </button>
-                        </form>
-                    </div>
+                    <BookForm
+                        name={name}
+                        author={author}
+                        description={description}
+                        onStock={onStock}
+                        image={image}
+                        handleChange={this.handleChange}
+                        addNewBook={this.addNewBook}
+                    />
                 )}
             </div>
         );
