@@ -1,19 +1,66 @@
 import React, { Component } from "react";
+import { fbase } from "../firebase";
 
 class BookForm extends Component {
+    state = {
+        books: [],
+        book: {
+            name: "",
+            author: "",
+            description: "",
+            onStock: true,
+            image: "",
+        },
+    };
+
+    handleChange = (event) => {
+        if (event.target.name === "onStock") {
+            this.setState({
+                book: {
+                    onStock: event.target.checked,
+                },
+            });
+        }
+        this.setState({
+            book: {
+                ...this.state.book,
+                [event.target.name]: event.target.value,
+            },
+        });
+    };
+
+    addNewBook = (event) => {
+        event.preventDefault();
+        const newBook = { ...this.state.book };
+
+        this.setState({
+            books: [...this.state.books, newBook],
+            book: {
+                name: "",
+                author: "",
+                description: "",
+                onStock: true,
+                image: "",
+            },
+        });
+    };
+
+    componentDidMount() {
+        this.ref = fbase.syncState("bookstore/books", {
+            context: this,
+            state: "books",
+            asArray: true,
+        });
+    }
+
+    componentWillUnmount() {
+        fbase.removeBinding(this.ref);
+    }
     render() {
-        const {
-            name,
-            author,
-            image,
-            description,
-            onStock,
-            addNewBook,
-            handleChange,
-        } = this.props;
+        const { name, author, image, description, onStock } = this.state.book;
         return (
             <div className="adminPanel col-md-4">
-                <form onSubmit={addNewBook}>
+                <form onSubmit={this.addNewBook}>
                     <div className="form-group">
                         <input
                             value={name}
@@ -22,7 +69,7 @@ class BookForm extends Component {
                             name="name"
                             placeholder="Book name"
                             className="form-control"
-                            onChange={handleChange}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <div className="form-group">
@@ -32,7 +79,7 @@ class BookForm extends Component {
                             id="author"
                             name="author"
                             placeholder="Book author"
-                            onChange={handleChange}
+                            onChange={this.handleChange}
                             className="form-control"
                         />
                     </div>
@@ -42,7 +89,7 @@ class BookForm extends Component {
                             id="description"
                             name="description"
                             placeholder="Book description"
-                            onChange={handleChange}
+                            onChange={this.handleChange}
                             className="form-control"
                         />
                     </div>
@@ -53,7 +100,7 @@ class BookForm extends Component {
                             id="onStock"
                             name="onStock"
                             className="form-check-input"
-                            onChange={handleChange}
+                            onChange={this.handleChange}
                         />
                         <label htmlFor="onStock" className="form-check-label">
                             On stock
@@ -66,7 +113,7 @@ class BookForm extends Component {
                             id="image"
                             name="image"
                             placeholder="Book image"
-                            onChange={handleChange}
+                            onChange={this.handleChange}
                             className="form-control"
                         />
                     </div>
