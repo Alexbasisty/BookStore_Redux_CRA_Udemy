@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Bookstore
+
+Bookstore app made while studiing React Redux with Udemy
+
+## Deploing
+
+Deployd on Heroku com
+
+## Direct URL
+
+direct URL `https://limitless-basin-18150.herokuapp.com/`
+
 ## Available Scripts
 
 In the project directory, you can run:
