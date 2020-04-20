@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Header from "./Header";
 import Inventory from "./Inventory";
 import Order from "./Order";
+import Footer from "./Footer";
 
 import "../index.css";
 
@@ -38,6 +39,7 @@ class App extends Component {
                         removeFromOrder={this.removeFromOrder}
                     />
                 </div>
+                <Footer />
             </div>
         );
     }

@@ -50,3 +50,20 @@ body {
     padding: 5px;
     margin: 5px;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: cadetblue;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.footer small {
+    padding: 5px;
+}
+.footer strong {
+    padding: 5px;
+}
