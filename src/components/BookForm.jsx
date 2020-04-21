@@ -3,21 +3,31 @@ import { fbase, firebaseApp } from "../firebase";
 
 class BookForm extends Component {
     state = {
-        book: {},
+        book: {
+            name: "",
+            author: "",
+            description: "",
+            onStock: true,
+            image: "",
+            genre: "",
+        },
     };
+
     handleChange = (event) => {
+        let newBook;
         if (event.target.name === "onStock") {
-            this.setState({
-                book: {
-                    onStock: event.target.checked,
-                },
-            });
-        }
-        this.setState({
-            book: {
+            newBook = {
+                ...this.state.book,
+                [event.target.name]: event.target.checked,
+            };
+        } else {
+            newBook = {
                 ...this.state.book,
                 [event.target.name]: event.target.value,
-            },
+            };
+        }
+        this.setState({
+            book: newBook,
         });
     };
 
@@ -26,15 +36,34 @@ class BookForm extends Component {
 
         if (!this.props.editMode) {
             const newBook = { ...this.state.book };
+
             this.props.addNewBook(newBook);
-            this.setState({ book: {} });
+
+            this.setState({
+                book: {
+                    name: "",
+                    author: "",
+                    description: "",
+                    onStock: true,
+                    image: "",
+                    genre: "",
+                },
+            });
         } else {
-            const newBook = {
-                ...this.props.book,
-                ...this.state.book,
-            };
+            let newBook = { ...this.props.book, ...this.state.book };
+
             this.props.editBook(this.props.book.name, newBook);
-            this.setState({ book: {} });
+
+            this.setState({
+                book: {
+                    name: "",
+                    author: "",
+                    description: "",
+                    onStock: true,
+                    image: "",
+                    genre: "",
+                },
+            });
         }
 
         event.target.reset();

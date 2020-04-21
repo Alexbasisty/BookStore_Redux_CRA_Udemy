@@ -10,8 +10,16 @@ class AdminPanel extends Component {
         loggedIn: false,
         editMode: false,
         emptyBook: {},
-        bookToEdit: {},
+        bookToEdit: {
+            name: "",
+            author: "",
+            description: "",
+            onStock: true,
+            image: "",
+            genre: "",
+        },
     };
+
     componentDidMount() {
         this.ref = fbase.syncState("bookstore/books", {
             context: this,
@@ -34,7 +42,17 @@ class AdminPanel extends Component {
                 books: [book],
             });
         }
-        this.setState({ editMode: false, bookToEdit: {} });
+        this.setState({
+            editMode: false,
+            bookToEdit: {
+                name: "",
+                author: "",
+                description: "",
+                onStock: true,
+                image: "",
+                genre: "",
+            },
+        });
     };
 
     removeFromInventory = (title) => {
@@ -49,6 +67,7 @@ class AdminPanel extends Component {
             bookToEdit: bookToEdit,
         });
     };
+
     editBook = (oldBookTitle, bookAfterEdit) => {
         const newBooks = this.state.books.filter(
             (book) => oldBookTitle !== book.name
@@ -57,7 +76,14 @@ class AdminPanel extends Component {
         this.setState({
             books: [...newBooks, bookAfterEdit],
             editMode: false,
-            bookToEdit: {},
+            bookToEdit: {
+                name: "",
+                author: "",
+                description: "",
+                onStock: true,
+                image: "",
+                genre: "",
+            },
         });
     };
 
