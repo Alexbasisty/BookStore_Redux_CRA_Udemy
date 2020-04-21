@@ -26,6 +26,12 @@ class AdminPanel extends Component {
     addNewBook = (book) =>
         this.setState({ books: [...this.state.books, book] });
 
+    removeFromInventory = (title) => {
+        this.setState({
+            books: this.state.books.filter((book) => title !== book.name),
+        });
+    };
+
     render() {
         return (
             <div>
@@ -35,7 +41,10 @@ class AdminPanel extends Component {
                 {this.state.loggedIn && (
                     <>
                         <BookForm addNewBook={this.addNewBook} />
-                        <AdminBookListing books={this.state.books} />
+                        <AdminBookListing
+                            books={this.state.books}
+                            removeFromInventory={this.removeFromInventory}
+                        />
                     </>
                 )}
             </div>

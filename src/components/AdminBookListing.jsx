@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import AdminBookView from "./AdminBookView";
+
 class AdminBookListing extends Component {
     state = {
         books: [],
@@ -8,9 +10,11 @@ class AdminBookListing extends Component {
         return this.props.books ? (
             <ol>
                 {this.props.books.map((book, index) => (
-                    <li key={index}>
-                        {book.name} {book.author}
-                    </li>
+                    <AdminBookView
+                        book={book}
+                        key={index}
+                        removeFromInventory={this.props.removeFromInventory}
+                    />
                 ))}
             </ol>
         ) : (
