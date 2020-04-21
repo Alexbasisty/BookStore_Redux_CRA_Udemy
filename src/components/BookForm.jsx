@@ -3,17 +3,8 @@ import { fbase, firebaseApp } from "../firebase";
 
 class BookForm extends Component {
     state = {
-        books: [],
-        book: {
-            name: "",
-            author: "",
-            description: "",
-            onStock: true,
-            image: "",
-            genre: "",
-        },
+        book: {},
     };
-
     handleChange = (event) => {
         if (event.target.name === "onStock") {
             this.setState({
@@ -32,19 +23,21 @@ class BookForm extends Component {
 
     addNewBook = (event) => {
         event.preventDefault();
-        const newBook = { ...this.state.book };
-        this.props.addNewBook(newBook);
 
-        this.setState({
-            books: [...this.state.books, newBook],
-            book: {
-                name: "",
-                author: "",
-                description: "",
-                onStock: true,
-                image: "",
-            },
-        });
+        if (!this.props.editMode) {
+            const newBook = { ...this.state.book };
+            this.props.addNewBook(newBook);
+            this.setState({ book: {} });
+        } else {
+            const newBook = {
+                ...this.props.book,
+                ...this.state.book,
+            };
+            this.props.editBook(this.props.book.name, newBook);
+            this.setState({ book: {} });
+        }
+
+        event.target.reset();
     };
 
     componentDidMount() {
@@ -71,14 +64,7 @@ class BookForm extends Component {
     genres = ["Fantastyka", "Horror", "Kryminał"];
 
     render() {
-        const {
-            name,
-            author,
-            image,
-            description,
-            onStock,
-            genre,
-        } = this.state.book;
+        const label = this.props.editMode ? "Edytuj" : "Dodaj";
         return (
             <>
                 <div className="adminPanel col-md-4">
@@ -88,7 +74,10 @@ class BookForm extends Component {
                                 Gatunek:
                                 <select
                                     name="genre"
-                                    value={genre}
+                                    value={
+                                        this.state.genre ||
+                                        this.props.book.genre
+                                    }
                                     onChange={this.handleChange}
                                     className="browser-default custom-select"
                                 >
@@ -103,7 +92,7 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={name}
+                                value={this.state.name || this.props.book.name}
                                 type="text"
                                 id="name"
                                 name="name"
@@ -114,7 +103,9 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={author}
+                                value={
+                                    this.state.author || this.props.book.author
+                                }
                                 type="text"
                                 id="author"
                                 name="author"
@@ -125,7 +116,10 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <textarea
-                                value={description}
+                                value={
+                                    this.state.description ||
+                                    this.props.book.description
+                                }
                                 id="description"
                                 name="description"
                                 placeholder="Book description"
@@ -138,7 +132,10 @@ class BookForm extends Component {
                             style={{ paddingLeft: "20px" }}
                         >
                             <input
-                                value={onStock}
+                                value={
+                                    this.state.onStock ||
+                                    this.props.book.onStock
+                                }
                                 type="checkbox"
                                 id="onStock"
                                 name="onStock"
@@ -154,7 +151,9 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={image}
+                                value={
+                                    this.state.image || this.props.book.image
+                                }
                                 type="text"
                                 id="image"
                                 name="image"
@@ -164,7 +163,7 @@ class BookForm extends Component {
                             />
                         </div>
                         <button type="submit" className="btn btn-primary">
-                            Dodaj
+                            {label}
                         </button>
                     </form>
                 </div>

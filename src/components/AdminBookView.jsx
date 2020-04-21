@@ -10,7 +10,17 @@ class AdminBookView extends Component {
                         {name} {author}
                     </b>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-2">
+                    <button
+                        className="btn btn-danger"
+                        onClick={() =>
+                            this.props.sendBookToEdit(this.props.book)
+                        }
+                    >
+                        Edytuj
+                    </button>
+                </div>
+                <div className="col-md-2">
                     <button
                         className="btn btn-danger"
                         onClick={() => this.props.removeFromInventory(name)}

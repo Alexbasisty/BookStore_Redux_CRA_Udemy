@@ -14,6 +14,7 @@ class AdminBookListing extends Component {
                         book={book}
                         key={index}
                         removeFromInventory={this.props.removeFromInventory}
+                        sendBookToEdit={this.props.sendBookToEdit}
                     />
                 ))}
             </ol>

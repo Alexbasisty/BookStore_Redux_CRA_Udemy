@@ -8,6 +8,9 @@ import AdminBookListing from "./AdminBookListing";
 class AdminPanel extends Component {
     state = {
         loggedIn: false,
+        editMode: false,
+        emptyBook: {},
+        bookToEdit: {},
     };
     componentDidMount() {
         this.ref = fbase.syncState("bookstore/books", {
@@ -23,12 +26,38 @@ class AdminPanel extends Component {
 
     changeLoggedIn = (newValue) => this.setState({ loggedIn: newValue });
 
-    addNewBook = (book) =>
-        this.setState({ books: [...this.state.books, book] });
+    addNewBook = (book) => {
+        if (Array.isArray(this.state.books)) {
+            this.setState({ books: [...this.state.books, book] });
+        } else {
+            this.setState({
+                books: [book],
+            });
+        }
+        this.setState({ editMode: false, bookToEdit: {} });
+    };
 
     removeFromInventory = (title) => {
         this.setState({
             books: this.state.books.filter((book) => title !== book.name),
+        });
+    };
+
+    sendBookToEdit = (bookToEdit) => {
+        this.setState({
+            editMode: true,
+            bookToEdit: bookToEdit,
+        });
+    };
+    editBook = (oldBookTitle, bookAfterEdit) => {
+        const newBooks = this.state.books.filter(
+            (book) => oldBookTitle !== book.name
+        );
+
+        this.setState({
+            books: [...newBooks, bookAfterEdit],
+            editMode: false,
+            bookToEdit: {},
         });
     };
 
@@ -40,10 +69,16 @@ class AdminPanel extends Component {
                 )}
                 {this.state.loggedIn && (
                     <>
-                        <BookForm addNewBook={this.addNewBook} />
+                        <BookForm
+                            addNewBook={this.addNewBook}
+                            editMode={this.state.editMode}
+                            book={this.state.bookToEdit}
+                            editBook={this.editBook}
+                        />
                         <AdminBookListing
                             books={this.state.books}
                             removeFromInventory={this.removeFromInventory}
+                            sendBookToEdit={this.sendBookToEdit}
                         />
                     </>
                 )}
