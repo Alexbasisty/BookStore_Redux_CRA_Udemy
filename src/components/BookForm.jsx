@@ -33,6 +33,7 @@ class BookForm extends Component {
     addNewBook = (event) => {
         event.preventDefault();
         const newBook = { ...this.state.book };
+        this.props.addNewBook(newBook);
 
         this.setState({
             books: [...this.state.books, newBook],
