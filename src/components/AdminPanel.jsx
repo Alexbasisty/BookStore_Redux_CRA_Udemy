@@ -36,23 +36,32 @@ class AdminPanel extends Component {
 
     addNewBook = (book) => {
         if (Array.isArray(this.state.books)) {
-            this.setState({ books: [...this.state.books, book] });
+            this.setState({
+                books: [...this.state.books, book],
+                editMode: false,
+                bookToEdit: {
+                    name: "",
+                    author: "",
+                    description: "",
+                    onStock: true,
+                    image: "",
+                    genre: "",
+                },
+            });
         } else {
             this.setState({
                 books: [book],
+                editMode: false,
+                bookToEdit: {
+                    name: "",
+                    author: "",
+                    description: "",
+                    onStock: true,
+                    image: "",
+                    genre: "",
+                },
             });
         }
-        this.setState({
-            editMode: false,
-            bookToEdit: {
-                name: "",
-                author: "",
-                description: "",
-                onStock: true,
-                image: "",
-                genre: "",
-            },
-        });
     };
 
     removeFromInventory = (title) => {

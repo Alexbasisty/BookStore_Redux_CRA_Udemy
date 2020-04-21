@@ -50,7 +50,16 @@ class BookForm extends Component {
                 },
             });
         } else {
-            let newBook = { ...this.props.book, ...this.state.book };
+            // const newBook = { ...this.props.book, ...this.state.book };
+            let newBook = Object.assign({}, this.props.book);
+
+            for (let attr in this.props.book) {
+                if (this.state.book[attr]) {
+                    if (this.state.book[attr] !== this.props.book[attr]) {
+                        newBook[attr] = this.state.book[attr];
+                    }
+                }
+            }
 
             this.props.editBook(this.props.book.name, newBook);
 
@@ -104,7 +113,7 @@ class BookForm extends Component {
                                 <select
                                     name="genre"
                                     value={
-                                        this.state.genre ||
+                                        this.state.book.genre ||
                                         this.props.book.genre
                                     }
                                     onChange={this.handleChange}
@@ -121,7 +130,9 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={this.state.name || this.props.book.name}
+                                value={
+                                    this.state.book.name || this.props.book.name
+                                }
                                 type="text"
                                 id="name"
                                 name="name"
@@ -133,7 +144,8 @@ class BookForm extends Component {
                         <div className="form-group">
                             <input
                                 value={
-                                    this.state.author || this.props.book.author
+                                    this.state.book.author ||
+                                    this.props.book.author
                                 }
                                 type="text"
                                 id="author"
@@ -146,7 +158,7 @@ class BookForm extends Component {
                         <div className="form-group">
                             <textarea
                                 value={
-                                    this.state.description ||
+                                    this.state.book.description ||
                                     this.props.book.description
                                 }
                                 id="description"
@@ -162,7 +174,7 @@ class BookForm extends Component {
                         >
                             <input
                                 value={
-                                    this.state.onStock ||
+                                    this.state.book.onStock ||
                                     this.props.book.onStock
                                 }
                                 type="checkbox"
@@ -181,7 +193,8 @@ class BookForm extends Component {
                         <div className="form-group">
                             <input
                                 value={
-                                    this.state.image || this.props.book.image
+                                    this.state.book.image ||
+                                    this.props.book.image
                                 }
                                 type="text"
                                 id="image"
