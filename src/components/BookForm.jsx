@@ -10,6 +10,7 @@ class BookForm extends Component {
             description: "",
             onStock: true,
             image: "",
+            genre: "",
         },
     };
 
@@ -66,12 +67,39 @@ class BookForm extends Component {
             });
     };
 
+    genres = ["Fantastyka", "Horror", "Kryminał"];
+
     render() {
-        const { name, author, image, description, onStock } = this.state.book;
+        const {
+            name,
+            author,
+            image,
+            description,
+            onStock,
+            genre,
+        } = this.state.book;
         return (
             <>
                 <div className="adminPanel col-md-4">
                     <form onSubmit={this.addNewBook}>
+                        <div className="form-group">
+                            <label>
+                                Gatunek:
+                                <select
+                                    name="genre"
+                                    value={genre}
+                                    onChange={this.handleChange}
+                                    className="browser-default custom-select"
+                                >
+                                    <option>dowolny</option>
+                                    {this.genres.map((genre, index) => (
+                                        <option key={index} value={genre}>
+                                            {genre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                        </div>
                         <div className="form-group">
                             <input
                                 value={name}
