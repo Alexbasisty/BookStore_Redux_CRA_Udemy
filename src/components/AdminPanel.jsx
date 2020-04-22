@@ -8,16 +8,6 @@ import AdminBookListing from "./AdminBookListing";
 class AdminPanel extends Component {
     state = {
         loggedIn: false,
-        editMode: false,
-        emptyBook: {},
-        bookToEdit: {
-            name: "",
-            author: "",
-            description: "",
-            onStock: true,
-            image: "",
-            genre: "",
-        },
     };
 
     componentDidMount() {
@@ -34,46 +24,14 @@ class AdminPanel extends Component {
 
     changeLoggedIn = (newValue) => this.setState({ loggedIn: newValue });
 
-    addNewBook = (book) => {
-        if (Array.isArray(this.state.books)) {
-            this.setState({
-                books: [...this.state.books, book],
-                editMode: false,
-                bookToEdit: {
-                    name: "",
-                    author: "",
-                    description: "",
-                    onStock: true,
-                    image: "",
-                    genre: "",
-                },
-            });
-        } else {
-            this.setState({
-                books: [book],
-                editMode: false,
-                bookToEdit: {
-                    name: "",
-                    author: "",
-                    description: "",
-                    onStock: true,
-                    image: "",
-                    genre: "",
-                },
-            });
-        }
-    };
+    addNewBook = (book) =>
+        this.setState({
+            books: [...this.state.books, book],
+        });
 
     removeFromInventory = (title) => {
         this.setState({
             books: this.state.books.filter((book) => title !== book.name),
-        });
-    };
-
-    sendBookToEdit = (bookToEdit) => {
-        this.setState({
-            editMode: true,
-            bookToEdit: bookToEdit,
         });
     };
 
@@ -84,15 +42,6 @@ class AdminPanel extends Component {
 
         this.setState({
             books: [...newBooks, bookAfterEdit],
-            editMode: false,
-            bookToEdit: {
-                name: "",
-                author: "",
-                description: "",
-                onStock: false,
-                image: "",
-                genre: "",
-            },
         });
     };
 
@@ -106,14 +55,11 @@ class AdminPanel extends Component {
                     <>
                         <BookForm
                             addNewBook={this.addNewBook}
-                            editMode={this.state.editMode}
-                            book={this.state.bookToEdit}
                             editBook={this.editBook}
                         />
                         <AdminBookListing
                             books={this.state.books}
                             removeFromInventory={this.removeFromInventory}
-                            sendBookToEdit={this.sendBookToEdit}
                         />
                     </>
                 )}

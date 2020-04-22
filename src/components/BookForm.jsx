@@ -36,28 +36,17 @@ class BookForm extends Component {
                 genre: "",
             });
         } else {
-            // const newBook = { ...this.props.book, ...this.state.book };
-            let newBook = Object.assign({}, this.props.book);
+            const newBook = { ...this.props.book };
 
-            for (let attr in this.props.book) {
-                if (this.state.book[attr]) {
-                    if (this.state.book[attr] !== this.props.book[attr]) {
-                        newBook[attr] = this.state.book[attr];
-                    }
-                }
-            }
+            this.props.editBook(this.props.titleOfBookForRemoval, newBook);
 
-            this.props.editBook(this.props.book.name, newBook);
-
-            this.setState({
-                book: {
-                    name: "",
-                    author: "",
-                    description: "",
-                    onStock: true,
-                    image: "",
-                    genre: "",
-                },
+            this.props.updateBook({
+                name: "",
+                author: "",
+                description: "",
+                onStock: true,
+                image: "",
+                genre: "",
             });
         }
 
@@ -204,6 +193,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         book: state.book,
+        editMode: state.editMode,
+        titleOfBookForRemoval: state.titleOfBookForRemoval,
     };
 };
 
