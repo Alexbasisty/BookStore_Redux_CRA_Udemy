@@ -12,6 +12,10 @@ Deployd on Heroku com
 
 direct URL `https://limitless-basin-18150.herokuapp.com/`
 
+### Deploing script
+
+before pushing on heroku master, switch in package.json file `"scripts":{..."start": "serve -s build"...}`
+
 ## Available Scripts
 
 In the project directory, you can run:
