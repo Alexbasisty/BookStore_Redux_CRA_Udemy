@@ -7,7 +7,7 @@ class BookForm extends Component {
             name: "",
             author: "",
             description: "",
-            onStock: true,
+            onStock: false,
             image: "",
             genre: "",
         },

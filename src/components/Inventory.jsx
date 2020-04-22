@@ -20,6 +20,10 @@ class Inventory extends Component {
     render() {
         let bookListing = <h4>No books on stock, sorry</h4>;
         if (Array.isArray(this.state.books)) {
+            const booksOnStock = this.state.books.filter(
+                (book) => book.onStock === true
+            );
+            console.log(booksOnStock);
             bookListing = this.state.books.map((book) => (
                 <BookView
                     key={book.name}
