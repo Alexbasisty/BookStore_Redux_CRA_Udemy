@@ -4,7 +4,7 @@ import App from "./App";
 import AdminPanel from "./AdminPanel";
 import PageNotFound from "./PageNotFound";
 
-import Provider from "react-redux";
+import { Provider } from "react-redux";
 import store from "../store/store";
 
 class Router extends Component {

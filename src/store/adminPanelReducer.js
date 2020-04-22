@@ -1,5 +1,12 @@
 const initialState = {
-    book: {},
+    book: {
+        name: "",
+        author: "",
+        description: "",
+        onStock: true,
+        image: "",
+        genre: "",
+    },
 };
 
 const adminPanelReducer = (state = initialState, action) => {

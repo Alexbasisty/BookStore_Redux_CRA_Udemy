@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { fbase, firebaseApp } from "../firebase";
+import { connect } from "react-redux";
 
 class BookForm extends Component {
     state = {
@@ -103,6 +104,15 @@ class BookForm extends Component {
 
     render() {
         const label = this.props.editMode ? "Edytuj" : "Dodaj";
+        const {
+            name,
+            author,
+            description,
+            onStock,
+            genre,
+            image,
+        } = this.props.book;
+
         return (
             <>
                 <div className="adminPanel col-md-4">
@@ -112,10 +122,7 @@ class BookForm extends Component {
                                 Gatunek:
                                 <select
                                     name="genre"
-                                    value={
-                                        this.state.book.genre ||
-                                        this.props.book.genre
-                                    }
+                                    value={genre}
                                     onChange={this.handleChange}
                                     className="browser-default custom-select"
                                 >
@@ -130,9 +137,7 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={
-                                    this.state.book.name || this.props.book.name
-                                }
+                                value={name}
                                 type="text"
                                 id="name"
                                 name="name"
@@ -143,10 +148,7 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={
-                                    this.state.book.author ||
-                                    this.props.book.author
-                                }
+                                value={author}
                                 type="text"
                                 id="author"
                                 name="author"
@@ -157,10 +159,7 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <textarea
-                                value={
-                                    this.state.book.description ||
-                                    this.props.book.description
-                                }
+                                value={description}
                                 id="description"
                                 name="description"
                                 placeholder="Book description"
@@ -173,10 +172,7 @@ class BookForm extends Component {
                             style={{ paddingLeft: "20px" }}
                         >
                             <input
-                                value={
-                                    this.state.book.onStock ||
-                                    this.props.book.onStock
-                                }
+                                value={onStock}
                                 type="checkbox"
                                 id="onStock"
                                 name="onStock"
@@ -192,10 +188,7 @@ class BookForm extends Component {
                         </div>
                         <div className="form-group">
                             <input
-                                value={
-                                    this.state.book.image ||
-                                    this.props.book.image
-                                }
+                                value={image}
                                 type="text"
                                 id="image"
                                 name="image"
@@ -217,4 +210,12 @@ class BookForm extends Component {
     }
 }
 
-export default BookForm;
+const mapStateToProps = (state) => {
+    return {
+        book: state.book,
+    };
+};
+
+const AddBookForm = connect(mapStateToProps)(BookForm);
+
+export default AddBookForm;
