@@ -23,19 +23,17 @@ class BookForm extends Component {
         event.preventDefault();
 
         if (!this.props.editMode) {
-            const newBook = { ...this.state.book };
+            const newBook = { ...this.props.book };
 
             this.props.addNewBook(newBook);
 
-            this.setState({
-                book: {
-                    name: "",
-                    author: "",
-                    description: "",
-                    onStock: true,
-                    image: "",
-                    genre: "",
-                },
+            this.props.updateBook({
+                name: "",
+                author: "",
+                description: "",
+                onStock: true,
+                image: "",
+                genre: "",
             });
         } else {
             // const newBook = { ...this.props.book, ...this.state.book };
