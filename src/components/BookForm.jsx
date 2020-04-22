@@ -3,33 +3,20 @@ import { fbase, firebaseApp } from "../firebase";
 import { connect } from "react-redux";
 
 class BookForm extends Component {
-    state = {
-        book: {
-            name: "",
-            author: "",
-            description: "",
-            onStock: false,
-            image: "",
-            genre: "",
-        },
-    };
-
     handleChange = (event) => {
         let newBook;
         if (event.target.name === "onStock") {
             newBook = {
-                ...this.state.book,
+                ...this.props.book,
                 [event.target.name]: event.target.checked,
             };
         } else {
             newBook = {
-                ...this.state.book,
+                ...this.props.book,
                 [event.target.name]: event.target.value,
             };
         }
-        this.setState({
-            book: newBook,
-        });
+        this.props.updateBook(newBook);
     };
 
     addNewBook = (event) => {
@@ -210,12 +197,18 @@ class BookForm extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateBook: (book) => dispatch({ type: "UPDATE_BOOK", payload: book }),
+    };
+};
+
 const mapStateToProps = (state) => {
     return {
         book: state.book,
     };
 };
 
-const AddBookForm = connect(mapStateToProps)(BookForm);
+const AddBookForm = connect(mapStateToProps, mapDispatchToProps)(BookForm);
 
 export default AddBookForm;
