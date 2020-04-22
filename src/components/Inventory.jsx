@@ -23,8 +23,7 @@ class Inventory extends Component {
             const booksOnStock = this.state.books.filter(
                 (book) => book.onStock === true
             );
-            console.log(booksOnStock);
-            bookListing = this.state.books.map((book) => (
+            bookListing = booksOnStock.map((book) => (
                 <BookView
                     key={book.name}
                     book={book}
