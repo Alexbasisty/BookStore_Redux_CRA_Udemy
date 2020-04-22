@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fbase, firebaseApp } from "../firebase";
 import { connect } from "react-redux";
+import { updateBookAction } from "../store/actions";
 
 class BookForm extends Component {
     handleChange = (event) => {
@@ -186,7 +187,7 @@ class BookForm extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateBook: (book) => dispatch({ type: "UPDATE_BOOK", payload: book }),
+        updateBook: (book) => dispatch(updateBookAction(book)),
     };
 };
 
