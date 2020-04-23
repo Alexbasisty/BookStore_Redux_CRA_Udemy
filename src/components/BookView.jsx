@@ -2,7 +2,14 @@ import React, { Component } from "react";
 
 class BookView extends Component {
     render() {
-        const { name, author, image, description, genre } = this.props.book;
+        const {
+            name,
+            author,
+            image,
+            description,
+            genre,
+            price,
+        } = this.props.book;
         return (
             <div key={name} className="bookView row">
                 <div className="col-md-4">
@@ -23,6 +30,10 @@ class BookView extends Component {
                     >
                         Zamów
                     </button>
+                    <p>
+                        <b>Cena </b>
+                        <span>{price}</span>
+                    </p>
                 </div>
             </div>
         );

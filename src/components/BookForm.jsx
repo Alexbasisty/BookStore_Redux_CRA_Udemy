@@ -89,6 +89,7 @@ class BookForm extends Component {
             onStock,
             genre,
             image,
+            price,
         } = this.props.book;
 
         return (
@@ -171,6 +172,17 @@ class BookForm extends Component {
                                 id="image"
                                 name="image"
                                 placeholder="Book image"
+                                onChange={this.handleChange}
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                value={price}
+                                type="text"
+                                id="price"
+                                name="price"
+                                placeholder="Cena"
                                 onChange={this.handleChange}
                                 className="form-control"
                             />
