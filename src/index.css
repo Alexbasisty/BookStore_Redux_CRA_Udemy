@@ -68,3 +68,10 @@ body {
 .footer strong {
     padding: 5px;
 }
+
+.admin-buttons {
+    float: right;
+    padding: 10px;
+    margin: 10px;
+    background-color: black;
+}

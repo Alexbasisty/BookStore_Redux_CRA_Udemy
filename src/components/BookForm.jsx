@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { fbase, firebaseApp } from "../firebase";
 import { connect } from "react-redux";
 import { updateBookAction } from "../store/actions";
+import { Link } from "react-router-dom";
 
 class BookForm extends Component {
     handleChange = (event) => {
@@ -94,6 +95,19 @@ class BookForm extends Component {
 
         return (
             <>
+                <div className="admin-buttons">
+                    <Link to="/">
+                        <button className="btn btn-primary">
+                            Wróć do sklepu
+                        </button>
+                    </Link>
+                    <button
+                        className="btn btn-danger ml-md-2"
+                        onClick={this.logOut}
+                    >
+                        Wyloguj
+                    </button>
+                </div>
                 <div className="adminPanel col-md-4">
                     <form onSubmit={this.addNewBook}>
                         <div className="form-group">
@@ -192,9 +206,6 @@ class BookForm extends Component {
                         </button>
                     </form>
                 </div>
-                <button className="btn btn-info" onClick={this.logOut}>
-                    Wyloguj
-                </button>
             </>
         );
     }
