@@ -11,6 +11,11 @@ class AdminPanel extends Component {
     };
 
     componentDidMount() {
+        if (localStorage.getItem("loggedIn")) {
+            this.setState({
+                loggedIn: localStorage.getItem("loggedIn"),
+            });
+        }
         this.ref = fbase.syncState("bookstore/books", {
             context: this,
             state: "books",
@@ -56,6 +61,7 @@ class AdminPanel extends Component {
                         <BookForm
                             addNewBook={this.addNewBook}
                             editBook={this.editBook}
+                            changeLoggedIn={this.changeLoggedIn}
                         />
                         <AdminBookListing
                             books={this.state.books}

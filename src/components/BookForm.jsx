@@ -67,6 +67,9 @@ class BookForm extends Component {
     }
 
     logOut = () => {
+        if (localStorage.getItem("loggedIn")) {
+            localStorage.removeItem("loggedIn");
+        }
         firebaseApp
             .auth()
             .signOut()

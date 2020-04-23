@@ -13,6 +13,7 @@ class LoginForm extends Component {
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
                 this.props.changeLoggedIn(true);
+                localStorage.setItem("loggedIn", true);
             })
             .catch(() => {
                 console.log("Unable to authenticate");
